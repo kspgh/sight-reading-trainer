@@ -9,8 +9,7 @@ If you want to use it:
   - Under Windows:
     - Homedrive:\Users\Username\Documents\MuseScore3\Plug-Ins or
     - Homedrive:\Program Files\MuseScore 3\plugins (if you have admin rights on your machine but installing Musescore requirest that anyway)
-  - Under Linux:
-    - sorry don't know the structure under Linux for Musescore. 
+  
 
 ![simple](https://user-images.githubusercontent.com/4438915/149885475-d17b11f7-5b8b-4ea2-91e3-47058125a635.png)
 ![medium](https://user-images.githubusercontent.com/4438915/149885482-c7cebed4-2890-458d-b550-2950a7bb74ee.png)
