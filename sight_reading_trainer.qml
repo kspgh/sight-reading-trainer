@@ -1,8 +1,14 @@
 //=============================================================================
 //  Sight Reading Trainer Plugin
-//
+//  
 //  Allows to create random notes to train sight reading.
 //  
+//  Version: 1.0.1
+//  - Bugfix: https://musescore.org/en/node/328541
+//
+//  Version: 1.0.0
+//  - initial Version
+//
 //  Todo:
 //  - add more levels and structure in a way that complexity raises reasonably
 //  - add .-notes 
@@ -112,6 +118,7 @@ MuseScore {
 			cursor.add(tempoElement); //first add tempoElement then change the actual tempo!!
 			console.log("tempo: " + tempo);
 			tempoElement.tempo = tempo / 60; //set the "Musescore" Tempo
+			tempoElement.followText = true;
 		}else{
 			console.log("Error: found tempo Element: " + tempoElement);
 		}
@@ -195,6 +202,11 @@ MuseScore {
 		trainingLevel.currentIndex = 0;
 	}
 	
+	function resetTrainingLevel(){
+		trainingLevel.currentIndex = 0;
+	}
+
+	
 	function setTrainingLevel(index){
 		console.log("setTrainingLevel: " + index);
 		var C4 = 60;
@@ -207,6 +219,8 @@ MuseScore {
 		var octave = 12;
 		
 		if(0 == index){
+			
+		} else if(1 == index){
 			bpmValue.text = "50";
 			numMeasures.text = "16";
 			countInCB.checked = true;
@@ -225,7 +239,7 @@ MuseScore {
 			maxNote.text = ""+D4;
 			minNote.text = ""+C4;
 
-		} else if(1 == index){
+		} else if(2 == index){
 			bpmValue.text = "50";
 			numMeasures.text = "16";
 			countInCB.checked = true;
@@ -244,7 +258,7 @@ MuseScore {
 			maxNote.text = ""+E4;
 			minNote.text = ""+C4;
 
-		} else if(2 == index){
+		} else if(3 == index){
 			bpmValue.text = "50";
 			numMeasures.text = "16";
 			countInCB.checked = true;
@@ -263,7 +277,7 @@ MuseScore {
 			maxNote.text = ""+F4;
 			minNote.text = ""+C4;
 
-		} else if(3 == index){
+		} else if(4 == index){
 			bpmValue.text = "50";
 			numMeasures.text = "16";
 			countInCB.checked = true;
@@ -282,7 +296,7 @@ MuseScore {
 			maxNote.text = ""+G4;
 			minNote.text = ""+C4;
 
-		} else if(4 == index){
+		} else if(5 == index){
 			bpmValue.text = "50";
 			numMeasures.text = "16";
 			countInCB.checked = true;
@@ -301,7 +315,7 @@ MuseScore {
 			maxNote.text = ""+A4;
 			minNote.text = ""+C4;
 
-		} else if(5 == index){
+		} else if(6 == index){
 			bpmValue.text = "50";
 			numMeasures.text = "16";
 			countInCB.checked = true;
@@ -320,7 +334,7 @@ MuseScore {
 			maxNote.text = ""+B4;
 			minNote.text = ""+C4;
 
-		} else if(6 == index){
+		} else if(7 == index){
 			bpmValue.text = "50";
 			numMeasures.text = "16";
 			countInCB.checked = true;
@@ -339,7 +353,7 @@ MuseScore {
 			maxNote.text = ""+(C4 + octave);
 			minNote.text = ""+C4;
 
-		} else if(7 == index){
+		} else if(8 == index){
 			bpmValue.text = "50";
 			numMeasures.text = "16";
 			countInCB.checked = true;
@@ -358,7 +372,7 @@ MuseScore {
 			maxNote.text = "" + (D4 + octave);
 			minNote.text = "" + C4;
 
-		} else if(8 == index){
+		} else if(9 == index){
 			bpmValue.text = "50";
 			numMeasures.text = "16";
 			countInCB.checked = true;
@@ -377,7 +391,7 @@ MuseScore {
 			maxNote.text = "" + (E4 + octave);
 			minNote.text = "" + C4;
 
-		} else if(9 == index){
+		} else if(10 == index){
 			bpmValue.text = "50";
 			numMeasures.text = "16";
 			countInCB.checked = true;
@@ -396,7 +410,7 @@ MuseScore {
 			maxNote.text = "" + (F4 + octave);
 			minNote.text = "" + C4;
 
-		} else if(10 == index){
+		} else if(11 == index){
 			bpmValue.text = "50";
 			numMeasures.text = "16";
 			countInCB.checked = true;
@@ -415,7 +429,7 @@ MuseScore {
 			maxNote.text = "" + (G4 + octave);
 			minNote.text = "" + C4;
 
-		} else if(11 == index){
+		} else if(12 == index){
 			bpmValue.text = "50";
 			numMeasures.text = "16";
 			countInCB.checked = true;
@@ -434,7 +448,7 @@ MuseScore {
 			maxNote.text = "" + (A4 + octave);
 			minNote.text = "" + C4;
 
-		} else if(12 == index){
+		} else if(13 == index){
 			bpmValue.text = "50";
 			numMeasures.text = "16";
 			countInCB.checked = true;
@@ -452,7 +466,7 @@ MuseScore {
 			onlyCmajCB.checked = true;
 			maxNote.text = "" + (C4 + octave + octave);
 			minNote.text = "" + C4;
-		} else if(13 == index){
+		} else if(14 == index){
 			//rest training...
 			bpmValue.text = "50";
 			numMeasures.text = "16";
@@ -471,7 +485,7 @@ MuseScore {
 			onlyCmajCB.checked = true;
 			maxNote.text = "" + D4;
 			minNote.text = "" + C4;
-		} else if(14 == index){
+		} else if(15 == index){
 			//rest training...
 			bpmValue.text = "50";
 			numMeasures.text = "16";
@@ -490,7 +504,7 @@ MuseScore {
 			onlyCmajCB.checked = true;
 			maxNote.text = "" + D4;
 			minNote.text = "" + C4;
-		} else if(15 == index){
+		} else if(16 == index){
 			//rest training...
 			bpmValue.text = "50";
 			numMeasures.text = "16";
@@ -509,7 +523,7 @@ MuseScore {
 			onlyCmajCB.checked = true;
 			maxNote.text = "" + D4;
 			minNote.text = "" + C4;
-		} else if(16 == index){
+		} else if(17 == index){
 			// bpmValue.text = "50";
 			// numMeasures.text = "16";
 			// countInCB.checked = true;
@@ -527,7 +541,7 @@ MuseScore {
 			// onlyCmajCB.checked = true;
 			// maxNote.text = "" + D4;
 			// minNote.text = "" + C4;
-		} else if(17 == index){
+		} else if(18 == index){
 			// bpmValue.text = "50";
 			// numMeasures.text = "16";
 			// countInCB.checked = true;
@@ -535,24 +549,6 @@ MuseScore {
 			// halfNoteCB.checked = true;
 			// quarterNoteCB.checked = false;
 			// eightsNoteCB.checked = false;
-			// sixteenthNoteCB.checked = false;
-			// maxRestsInput.text = "1";
-			// wholeRestCB.checked = false;
-			// halfRestCB.checked = false;
-			// quarterRestCB.checked = false;
-			// eightsRestCB.checked = false;
-			// sixteenthRestCB.checked = false;
-			// onlyCmajCB.checked = true;
-			// maxNote.text = "" + D4;
-			// minNote.text = "" + C4;
-		} else if(18 == index){
-			// bpmValue.text = "50";
-			// numMeasures.text = "16";
-			// countInCB.checked = true;
-			// wholeNoteCB.checked = false;
-			// halfNoteCB.checked = true;
-			// quarterNoteCB.checked = true;
-			// eightsNoteCB.checked = true;
 			// sixteenthNoteCB.checked = false;
 			// maxRestsInput.text = "1";
 			// wholeRestCB.checked = false;
@@ -838,18 +834,18 @@ MuseScore {
             anchors.fill: parent
             anchors.margins: 10
             columns: 2
-			rows: 14
+			rows: 21
             focus: true
 			
-            Canvas {
-                  id: canvas
+            // Canvas {
+                  // id: canvas
                   //Layout.rowSpan: 2
                   // Layout.minimumWidth: 102
                   // Layout.minimumHeight: 102
                   // Layout.fillWidth: true
                   // Layout.fillHeight: true
                   
-                  onPaint: {
+                  // onPaint: {
                         // var w = canvas.width;
                         // var h = canvas.height;
 
@@ -858,7 +854,7 @@ MuseScore {
                         // canvasBPM.text = getFloatFromInput(bpmValue);
                         // canvasNumMeasures.text = getFloatFromInput(numMeasures);
 
-						console.log("onPaint");
+						// console.log("onPaint");
 
 						// var maxNoteInt = getIntFromInput(maxNote);
 						// console.log("onPaint1:maxNoteInt: " + maxNoteInt);
@@ -879,7 +875,7 @@ MuseScore {
 						// if(minNoteInt > maxNoteInt){
 							// minNoteInt = maxNoteInt - 1;
 						// }
-                  }
+                  // }
 				  
                   // Label {
                         // id: canvasBPM
@@ -890,27 +886,40 @@ MuseScore {
                         // color: '#d8d8d8'
                   // }
 				  
-            } //end of Canvas
+            // } //end of Canvas
 
             Label {
                   text: qsTr("BPM:")
             }
             TextField {
-                  id: bpmValue
-                  placeholderText: '50'
-                  validator: DoubleValidator { bottom: 1;/* top: 512;*/ decimals: 1; notation: DoubleValidator.StandardNotation; }
-                  implicitHeight: 24
-                  onTextChanged: { canvas.requestPaint(); }
+                id: bpmValue
+                placeholderText: '50'
+                validator: DoubleValidator { bottom: 1;/* top: 512;*/ decimals: 1; notation: DoubleValidator.StandardNotation; }
+                implicitHeight: 24
+                // onTextChanged: { 
+					// //canvas.requestPaint(); 
+				// }
+				onEditingFinished: {
+					console.log("onEditingFinished, bpmValue");
+					resetTrainingLevel();
+				}
+				  
             }
             Label {
                   text: qsTr("Num Measures:")
             }
             TextField {
-                  id: numMeasures
-                  placeholderText: '16'
-                  validator: DoubleValidator { bottom: 1;/* top: 512;*/ decimals: 1; notation: DoubleValidator.StandardNotation; }
-                  implicitHeight: 24
-                  onTextChanged: { canvas.requestPaint(); }
+                id: numMeasures
+                placeholderText: '16'
+                validator: DoubleValidator { bottom: 1;/* top: 512;*/ decimals: 1; notation: DoubleValidator.StandardNotation; }
+                implicitHeight: 24
+                // onTextChanged: { 
+					// //canvas.requestPaint(); 
+				// }
+				onEditingFinished: {
+					console.log("onEditingFinished, numMeasures");
+					resetTrainingLevel();
+				}
             }
 			
 			CheckBox {
@@ -919,6 +928,10 @@ MuseScore {
 				Layout.columnSpan: 2
 				checked: true
 				//exclusiveGroup: exclusiveGroup
+				onClicked: { 
+					//console.log("onClicked: countInCB"); 
+					resetTrainingLevel();
+				}
 			}
 			
             Label {
@@ -929,31 +942,46 @@ MuseScore {
 				id: wholeNoteCB
 				text: "whole"
 				checked: true
-				//exclusiveGroup: exclusiveGroup
+				onClicked: { 
+					//console.log("onClicked: wholeNoteCB"); 
+					resetTrainingLevel();
+				}
 			}
 			CheckBox {
 				id: halfNoteCB
 				text: "half"
 				checked: true
-				//exclusiveGroup: exclusiveGroup
+				onClicked: { 
+					//console.log("onClicked: halfNoteCB"); 
+					resetTrainingLevel();
+				}
 			}
 			CheckBox {
 				id: quarterNoteCB
 				text: "quarter"
 				checked: true
-				//exclusiveGroup: exclusiveGroup
+				onClicked: { 
+					//console.log("onClicked: quarterNoteCB"); 
+					resetTrainingLevel();
+				}
 			}
 			CheckBox {
 				id: eightsNoteCB
 				text: "eights"
 				checked: true
-				//exclusiveGroup: exclusiveGroup
+				onClicked: { 
+					//console.log("onClicked: eightsNoteCB"); 
+					resetTrainingLevel();
+				}
 			}
 			CheckBox {
 				id: sixteenthNoteCB
 				text: "sixteenth"
 				checked: true
-				//exclusiveGroup: exclusiveGroup
+				onClicked: { 
+					//console.log("onClicked: sixteenthNoteCB"); 
+					resetTrainingLevel();
+				}
 			}
             Label {
                   text: qsTr("Rests:")
@@ -963,41 +991,60 @@ MuseScore {
                   text: qsTr("Max Rests per Measure:")
             }
             TextField {
-                  id: maxRestsInput
-                  placeholderText: '1'
-                  validator: DoubleValidator { bottom: 1;/* top: 512;*/ decimals: 1; notation: DoubleValidator.StandardNotation; }
-                  implicitHeight: 24
-                  onTextChanged: { canvas.requestPaint(); }
+                id: maxRestsInput
+                placeholderText: '1'
+                validator: DoubleValidator { bottom: 1;/* top: 512;*/ decimals: 1; notation: DoubleValidator.StandardNotation; }
+                implicitHeight: 24
+                //onTextChanged: { canvas.requestPaint(); }
+				onEditingFinished: {
+					console.log("onEditingFinished, maxRestsInput");
+					resetTrainingLevel();
+				}
             }
 			CheckBox {
 				id: wholeRestCB
 				text: "whole"
 				checked: true
-				//exclusiveGroup: exclusiveGroup
+				onClicked: { 
+					//console.log("onClicked: wholeRestCB"); 
+					resetTrainingLevel();
+				}
 			}
 			CheckBox {
 				id: halfRestCB
 				text: "half"
 				checked: true
-				//exclusiveGroup: exclusiveGroup
+				onClicked: { 
+					//console.log("onClicked: halfRestCB"); 
+					resetTrainingLevel();
+				}
 			}
 			CheckBox {
 				id: quarterRestCB
 				text: "quarter"
 				checked: true
-				//exclusiveGroup: exclusiveGroup
+				onClicked: { 
+					//console.log("onClicked: quarterRestCB"); 
+					resetTrainingLevel();
+				}
 			}
 			CheckBox {
 				id: eightsRestCB
 				text: "eights"
 				checked: true
-				//exclusiveGroup: exclusiveGroup
+				onClicked: { 
+					//console.log("onClicked: eightsRestCB"); 
+					resetTrainingLevel();
+				}
 			}
 			CheckBox {
 				id: sixteenthRestCB
 				text: "sixteenth"
 				checked: true
-				//exclusiveGroup: exclusiveGroup
+				onClicked: { 
+					//console.log("onClicked: sixteenthRestCB"); 
+					resetTrainingLevel();
+				}
 			}
  
 			// CheckBox {
@@ -1005,6 +1052,10 @@ MuseScore {
 				// text: "dot <.>"
 				// checked: true
 				// //exclusiveGroup: exclusiveGroup
+				// onClicked: { 
+					//console.log("onClicked: sixteenthRestCB"); 
+					// resetTrainingLevel();
+				// }
 			// }
 			
 			Label {
@@ -1022,6 +1073,10 @@ MuseScore {
 				Layout.columnSpan: 2
 				checked: true
 				//exclusiveGroup: exclusiveGroup
+				onClicked: { 
+					//console.log("onClicked: onlyCmajCB"); 
+					resetTrainingLevel();
+				}
 			}
 
 			Label {
@@ -1033,11 +1088,13 @@ MuseScore {
 				validator: IntValidator { bottom: 49; top: 88;}
 				implicitHeight: 24
 				//                  onTextChanged: { canvas.requestPaint(); }
-				onTextChanged: { 
-					console.log("onTextChanged: maxNote");
-				}
+				// onTextChanged: { 
+					// console.log("onTextChanged: maxNote");
+					// resetTrainingLevel();
+				// }
 				onEditingFinished: {
 					console.log("onEditingFinished, maxNote");
+					resetTrainingLevel();
 					validateMinMaxNote();
 				}
             }
@@ -1050,11 +1107,13 @@ MuseScore {
 				placeholderText: '48'
 				validator: IntValidator { bottom: 48; top: 87;}
 				implicitHeight: 24
-				onTextChanged: { 
-					console.log("onTextChanged: minNote");
-				}
+				// onTextChanged: { 
+					// console.log("onTextChanged: minNote");
+					// resetTrainingLevel();
+				// }
 				onEditingFinished: {
 					console.log("onEditingFinished, minNote");
+					resetTrainingLevel();
 					validateMinMaxNote();
 				}
             }
@@ -1069,23 +1128,23 @@ MuseScore {
 				Layout.columnSpan: 2
 				currentIndex: 0
 				width: parent.width
-				model: ["1: just C4, whole + half note", 
-				"2: C4, D4, whole + half note", 
-				"3: C4 - E4, whole + half note", 
-				"4: C4 - F4, whole + half note", 
-				"5: C4 - G4, whole + half note", 
-				"6: C4 - A4, whole + half note", 
-				"7: C4 - B4, whole + half note", 
-				"8: C4 - C5, whole + half note", 
-				"9: C4 - D5, whole + half note", 
-				"10: C4 - E5, whole + half note", 
-				"11: C4 - F5, whole + half note", 
-				"12: C4 - G5, whole + half note", 
-				"13: C4 - A5, whole + half note", 
-				"14: C4, 4th note, 4th rest", 
-				"15: C4, half/4th note, half/4th rest", 
-				"16: C4, half/4th/8th note, half/4th/8th rest", 
-				"17: undefined", 
+				model: ["1: user defined",
+				"2: just C4, whole + half note", 
+				"3: C4, D4, whole + half note", 
+				"4: C4 - E4, whole + half note", 
+				"5: C4 - F4, whole + half note", 
+				"6: C4 - G4, whole + half note", 
+				"7: C4 - A4, whole + half note", 
+				"8: C4 - B4, whole + half note", 
+				"9: C4 - C5, whole + half note", 
+				"10: C4 - D5, whole + half note", 
+				"11: C4 - E5, whole + half note", 
+				"12: C4 - F5, whole + half note", 
+				"13: C4 - G5, whole + half note", 
+				"14: C4 - A5, whole + half note", 
+				"15: C4, 4th note, 4th rest", 
+				"16: C4, half/4th note, half/4th rest", 
+				"17: C4, half/4th/8th note, half/4th/8th rest", 
 				"18: undefined", 
 				"19: undefined", 
 				"20: undefined"]
