@@ -1,4 +1,7 @@
 # sight-reading-trainer
+
+This project has moved to: https://musescore.org/en/project/sight-reading-trainer
+
 Musescore PlugIn that generates random notes to help improving sight reading skills written in qml 
 ![sight_reading_trainer_snapshot](https://user-images.githubusercontent.com/4438915/149885363-70ea0ae9-5a21-4079-830e-cf86fc0ae4a6.png)
 
