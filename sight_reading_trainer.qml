@@ -6,6 +6,7 @@
 //  Version: 1.0.2
 //  - fixed another bug with training level control
 //  - display the version on top of the dialog
+//  - fixed an issue with the last Training level info label
 //
 //  Version: 1.0.1
 //  - Bugfix: https://musescore.org/en/node/328541
@@ -173,6 +174,7 @@ MuseScore {
 		property alias maxNote: maxNote.text
 		property alias minNote: minNote.text
 		property alias trainingLevel: trainingLevel.currentIndex
+		property alias trainingLevelLabel: trainingLevelLabel.text
 
 	}
 
