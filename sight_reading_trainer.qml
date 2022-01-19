@@ -3,6 +3,9 @@
 //  
 //  Allows to create random notes to train sight reading.
 //  
+//  Version: 1.0.2
+//  - fixed another bug with training level control
+//
 //  Version: 1.0.1
 //  - Bugfix: https://musescore.org/en/node/328541
 //
@@ -22,7 +25,7 @@
 //                Thanks to jeetee for support with tempo changes
 //=============================================================================
 import QtQuick 2.2
-import QtQuick.Controls 1.1
+import QtQuick.Controls 2.1 //was QtQuick.Controls 1.1 in first version, 2.1 supports onPressed - event.
 import QtQuick.Controls.Styles 1.3
 import QtQuick.Layouts 1.1
 import QtQuick.Window 2.2
@@ -38,8 +41,8 @@ MuseScore {
 	requiresScore: false
 	id: 'pluginId'
 
-	width: 300
-	height: 700
+	width: 400
+	height: 850
 
 	function addRandomNote(noteSet, cursor) { 
 
@@ -203,6 +206,9 @@ MuseScore {
 	}
 	
 	function resetTrainingLevel(){
+		if(0 != trainingLevel.currentIndex){
+			trainingLevelLabel.text = "Training Level: Last level: " + (trainingLevel.currentIndex + 1);
+		}
 		trainingLevel.currentIndex = 0;
 	}
 
@@ -895,14 +901,19 @@ MuseScore {
                 id: bpmValue
                 placeholderText: '50'
                 validator: DoubleValidator { bottom: 1;/* top: 512;*/ decimals: 1; notation: DoubleValidator.StandardNotation; }
-                implicitHeight: 24
+                implicitHeight: 28
                 // onTextChanged: { 
 					// //canvas.requestPaint(); 
 				// }
 				onEditingFinished: {
-					console.log("onEditingFinished, bpmValue");
+					// console.log("onEditingFinished, bpmValue");
 					resetTrainingLevel();
 				}
+				onPressed: {
+					console.log("onPressed, bpmValue");
+					resetTrainingLevel();
+				}
+
 				  
             }
             Label {
@@ -912,14 +923,19 @@ MuseScore {
                 id: numMeasures
                 placeholderText: '16'
                 validator: DoubleValidator { bottom: 1;/* top: 512;*/ decimals: 1; notation: DoubleValidator.StandardNotation; }
-                implicitHeight: 24
+                implicitHeight: 28
                 // onTextChanged: { 
 					// //canvas.requestPaint(); 
 				// }
 				onEditingFinished: {
-					console.log("onEditingFinished, numMeasures");
+					// console.log("onEditingFinished, numMeasures");
 					resetTrainingLevel();
 				}
+				onPressed: {
+					console.log("onPressed, numMeasures");
+					resetTrainingLevel();
+				}
+
             }
 			
 			CheckBox {
@@ -994,12 +1010,17 @@ MuseScore {
                 id: maxRestsInput
                 placeholderText: '1'
                 validator: DoubleValidator { bottom: 1;/* top: 512;*/ decimals: 1; notation: DoubleValidator.StandardNotation; }
-                implicitHeight: 24
+                implicitHeight: 28
                 //onTextChanged: { canvas.requestPaint(); }
 				onEditingFinished: {
-					console.log("onEditingFinished, maxRestsInput");
+					// console.log("onEditingFinished, maxRestsInput");
 					resetTrainingLevel();
 				}
+				onPressed: {
+					console.log("onPressed, maxRestsInput");
+					resetTrainingLevel();
+				}
+				
             }
 			CheckBox {
 				id: wholeRestCB
@@ -1086,16 +1107,20 @@ MuseScore {
 				id: maxNote
 				placeholderText: '72'
 				validator: IntValidator { bottom: 49; top: 88;}
-				implicitHeight: 24
+				implicitHeight: 28
 				//                  onTextChanged: { canvas.requestPaint(); }
 				// onTextChanged: { 
 					// console.log("onTextChanged: maxNote");
 					// resetTrainingLevel();
 				// }
 				onEditingFinished: {
-					console.log("onEditingFinished, maxNote");
-					resetTrainingLevel();
+					// console.log("onEditingFinished, maxNote");
+					//resetTrainingLevel();
 					validateMinMaxNote();
+				}
+				onPressed: {
+					console.log("onPressed, maxNote");
+					resetTrainingLevel();
 				}
             }
 
@@ -1106,20 +1131,25 @@ MuseScore {
 				id: minNote
 				placeholderText: '48'
 				validator: IntValidator { bottom: 48; top: 87;}
-				implicitHeight: 24
+				implicitHeight: 28
 				// onTextChanged: { 
 					// console.log("onTextChanged: minNote");
 					// resetTrainingLevel();
 				// }
 				onEditingFinished: {
-					console.log("onEditingFinished, minNote");
-					resetTrainingLevel();
+					// console.log("onEditingFinished, minNote");
+					//resetTrainingLevel();
 					validateMinMaxNote();
+				}
+				onPressed: {
+					console.log("onPressed, minNote");
+					resetTrainingLevel();
 				}
             }
 			
 			Label {
-                  text: qsTr("Training Level: ")
+                  id: trainingLevelLabel
+				  text: qsTr("Training Level: ")
 				  Layout.columnSpan: 2
             }
 			
@@ -1128,6 +1158,8 @@ MuseScore {
 				Layout.columnSpan: 2
 				currentIndex: 0
 				width: parent.width
+				//implicitHeight: 50
+				implicitWidth: 380
 				model: ["1: user defined",
 				"2: just C4, whole + half note", 
 				"3: C4, D4, whole + half note", 
@@ -1149,6 +1181,7 @@ MuseScore {
 				"19: undefined", 
 				"20: undefined"]
 				onCurrentIndexChanged: {
+					//trainingLevelLabel.text = "Training Level: Last level: " + (currentIndex+1)
 					setTrainingLevel(currentIndex);
 				}
 			}
@@ -1158,7 +1191,8 @@ MuseScore {
                   Layout.columnSpan: 2
                   text: qsTranslate("PrefsDialogBase", "Reset to Default")
                   onClicked: {
-                        resetToDefaultConfig();
+                        resetTrainingLevel();
+						resetToDefaultConfig();
                   }
             }
             Button {
