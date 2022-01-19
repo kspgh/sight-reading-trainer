@@ -42,7 +42,7 @@ MuseScore {
 	id: 'pluginId'
 
 	width: 400
-	height: 850
+	height: 900
 
 	function addRandomNote(noteSet, cursor) { 
 
@@ -894,6 +894,10 @@ MuseScore {
 				  
             // } //end of Canvas
 
+            Label {
+                  text: qsTr("Version: 1.0.2")
+				  Layout.columnSpan: 2
+            }
             Label {
                   text: qsTr("BPM:")
             }
