@@ -5,6 +5,7 @@
 //  
 //  Version: 1.0.2
 //  - fixed another bug with training level control
+//  - display the version on top of the dialog
 //
 //  Version: 1.0.1
 //  - Bugfix: https://musescore.org/en/node/328541
