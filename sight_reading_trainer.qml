@@ -3,6 +3,9 @@
 //  
 //  Allows to create random notes to train sight reading.
 //  
+//  Version: 1.0.3
+//  - fixed issue: https://musescore.org/en/node/328538
+//
 //  Version: 1.0.2
 //  - fixed another bug with training level control
 //  - display the version on top of the dialog
@@ -37,7 +40,7 @@ import MuseScore 3.0
 
 MuseScore {
 	menuPath: "Plugins.SightReadingTrainer"
-	version: "1.0.0"
+	version: "1.0.3"
 	description: qsTr("Creates random notes and rests to train sight reading")
 	pluginType: "dialog"
 	requiresScore: false
@@ -123,7 +126,8 @@ MuseScore {
 			cursor.add(tempoElement); //first add tempoElement then change the actual tempo!!
 			console.log("tempo: " + tempo);
 			tempoElement.tempo = tempo / 60; //set the "Musescore" Tempo
-			tempoElement.followText = true;
+			//tempoElement.followText = true;
+			tempoElement.tempoFollowText = true;
 		}else{
 			console.log("Error: found tempo Element: " + tempoElement);
 		}
@@ -898,7 +902,7 @@ MuseScore {
             // } //end of Canvas
 
             Label {
-                  text: qsTr("Version: 1.0.2")
+                  text: qsTr("Version: 1.0.3")
 				  Layout.columnSpan: 2
             }
             Label {
