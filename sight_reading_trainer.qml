@@ -2,7 +2,12 @@
 //  Sight Reading Trainer Plugin
 //  
 //  Allows to create random notes to train sight reading.
+//  Find it at: https://musescore.org/en/project/sight-reading-trainer and 
+//  GitHub: https://github.com/kspgh/sight-reading-trainer
 //  
+//  Version: 1.0.4
+//  - configuration appears as composer. This helps to reproduce a radom score with the same configuration if one saves the score
+//
 //  Version: 1.0.3
 //  - fixed issue: https://musescore.org/en/node/328538
 //
@@ -611,6 +616,27 @@ MuseScore {
 		} else console.log("Error: Invalid index in Training Level");
 	}
 
+	function createConfigInfo(){
+		var str = "bpm: " + bpmValue.text;
+		str += "\n measures: " + numMeasures.text; 
+		str += "\n countIn: " + countInCB.checked;
+		str += "\n WholeNote: " + wholeNoteCB.checked;
+		str += "\n halfNote: " + halfNoteCB.checked;
+		str += "\n quarterNote: " + quarterNoteCB.checked;
+		str += "\n eightsNote: " + eightsNoteCB.checked;
+		str += "\n sixteenthNote: " + sixteenthNoteCB.checked;
+		str += "\n maxRestsInput: " + maxRestsInput.text;
+		str += "\n wholeRest: " + wholeRestCB.checked;
+		str += "\n halfRest: " + halfRestCB.checked;
+		str += "\n quarterRest: " + quarterRestCB.checked;
+		str += "\n eightsRest: " + eightsRestCB.checked;
+		str += "\n sixteenthRest: " + sixteenthRestCB.checked;
+		str += "\n onlyCmaj: " + onlyCmajCB.checked;
+		str += "\n maxNote: " + maxNote.text;
+		str += "\n minNote: " + minNote.text;
+		return str; 
+	}
+
 	function validateMinMaxNote(){
 		var maxNoteInt = getIntFromInput(maxNote);
 		// console.log("onTextChanged:maxNoteInt: " + maxNoteInt);
@@ -672,7 +698,8 @@ MuseScore {
 		if(countIn){
 			trainingMeasures--;
 		}
-		score.addText("subtitle", "Time Signature: " + numerator + "/" + denominator +", Measures: " + trainingMeasures + ", Count in: " + strCountIn);
+		//score.addText("subtitle", "Time Signature: " + numerator + "/" + denominator +", Measures: " + trainingMeasures + ", Count in: " + strCountIn);
+		score.addText("composer", createConfigInfo());
 
 		var cursor = score.newCursor();
 		cursor.track = 0;
@@ -902,7 +929,7 @@ MuseScore {
             // } //end of Canvas
 
             Label {
-                  text: qsTr("Version: 1.0.3")
+                  text: qsTr("Version: 1.0.4")
 				  Layout.columnSpan: 2
             }
             Label {
