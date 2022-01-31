@@ -5,6 +5,10 @@
 //  Find it at: https://musescore.org/en/project/sight-reading-trainer and 
 //  GitHub: https://github.com/kspgh/sight-reading-trainer
 //  
+//
+//  Version: 1.0.5
+//	- added Element.TIMESIG to indicate that measures are in 4/4
+//
 //  Version: 1.0.4
 //  - configuration appears as composer. This helps to reproduce a radom score with the same configuration if one saves the score
 //
@@ -45,7 +49,7 @@ import MuseScore 3.0
 
 MuseScore {
 	menuPath: "Plugins.SightReadingTrainer"
-	version: "1.0.3"
+	version: "1.0.5"
 	description: qsTr("Creates random notes and rests to train sight reading")
 	pluginType: "dialog"
 	requiresScore: false
@@ -60,6 +64,7 @@ MuseScore {
 		// console.log("add random Note, idx: " + idx);
 		// console.log("add random Note: " + noteSet[idx]);
 		cursor.addNote(noteSet[idx]);
+		//cursor.next(); do not add a next call here! it will add rests.
 	}
 
 	function createNoteSet(minNoteInt, maxNoteInt){
@@ -131,8 +136,8 @@ MuseScore {
 			cursor.add(tempoElement); //first add tempoElement then change the actual tempo!!
 			console.log("tempo: " + tempo);
 			tempoElement.tempo = tempo / 60; //set the "Musescore" Tempo
-			//tempoElement.followText = true;
-			tempoElement.tempoFollowText = true;
+			//tempoElement.followText = true;//valid in earlier Musescore versions
+			tempoElement.tempoFollowText = true;//valid since 3.6, maybe even a little earlier.
 		}else{
 			console.log("Error: found tempo Element: " + tempoElement);
 		}
@@ -616,6 +621,7 @@ MuseScore {
 		} else console.log("Error: Invalid index in Training Level");
 	}
 
+	// Config Info will be written instead of cmposer at the top of the score.
 	function createConfigInfo(){
 		var str = "bpm: " + bpmValue.text;
 		str += "\n measures: " + numMeasures.text; 
@@ -637,6 +643,7 @@ MuseScore {
 		return str; 
 	}
 
+	//make sure it is always: min_const < min < max < max_const
 	function validateMinMaxNote(){
 		var maxNoteInt = getIntFromInput(maxNote);
 		// console.log("onTextChanged:maxNoteInt: " + maxNoteInt);
@@ -684,9 +691,9 @@ MuseScore {
 			measures++;
 		}
 
-		var score = newScore("Random.mscz", "x", measures);
+		//var score = newScore("Random.mscz", "x", measures);
 		//var score = newScore("Random.mscz", "grand-piano", measures);
-		//var score = newScore("Random.mscz", "violin", measures);
+		var score = newScore("Random.mscz", "violin", measures);
 		
 		score.startCmd();
 		//trying to add a bass clef "F" but it does not work this way :-(
@@ -704,6 +711,11 @@ MuseScore {
 		var cursor = score.newCursor();
 		cursor.track = 0;
 		cursor.rewind(0);
+		
+		// write the time like 4/4 or 3/4 to the score direct after violin clef
+		var ts = newElement(Element.TIMESIG);
+		ts.timesig = fraction(numerator, denominator);
+		cursor.add(ts);
 		
 		setTempo(cursor, tempo);
 		
@@ -736,7 +748,9 @@ MuseScore {
 			//allow max number of rests in one measure to avoid measures which only contain rests...
 			var maxRestsInAMeasure = getFloatFromInput(maxRestsInput);
 			var restCount = 1;
-			var noSubsequentRests = false;//if true then the last note added was a rest. we don't want two subsequent rests
+			//if true then the last note added was a rest. we don't want two subsequent rests
+			// independent from value of maxRestInAMeasure.
+			var noSubsequentRests = false;
 			
 			while(0 < notesIndex){ //max notes are sixteenth notes!!
 				var rand = Math.floor((Math.random() * 10) + 1);
@@ -746,7 +760,7 @@ MuseScore {
 					console.log("add whole note");
 					cursor.setDuration(1, 1);
 					addRandomNote(noteSet, cursor);
-					noSubsequentRests = false;//fine to add a rest even though this was a whole not so there is no space
+					noSubsequentRests = false;//fine to add a rest even though this was a whole note so there is no space
 					notesIndex = notesIndex - 16;
 					break;
 				}
@@ -769,6 +783,7 @@ MuseScore {
 				// half note
 				else if(halfNoteCB.checked && (8 <= notesIndex) && (3 == rand)){
 					console.log("add half note");
+					//cursor.setDuration(3, 4);
 					cursor.setDuration(1, 2);
 					addRandomNote(noteSet, cursor);
 					noSubsequentRests = false;//next add might be a rest or note
@@ -929,7 +944,7 @@ MuseScore {
             // } //end of Canvas
 
             Label {
-                  text: qsTr("Version: 1.0.4")
+                  text: qsTr("Version: " + version)
 				  Layout.columnSpan: 2
             }
             Label {
@@ -1001,6 +1016,22 @@ MuseScore {
 					resetTrainingLevel();
 				}
 			}
+			// ComboBox {
+				// id: wholeNoteComb
+				// //Layout.columnSpan: 2
+				// currentIndex: 0
+				// width: parent.width
+				// //implicitHeight: 50
+				// implicitWidth: 380
+				// model: ["--whole--",
+				// "whole", 
+				// "whole + ."]
+				// onCurrentIndexChanged: {
+					// //trainingLevelLabel.text = "Training Level: Last level: " + (currentIndex+1)
+					// resetTrainingLevel();
+				// }
+			// }
+			
 			CheckBox {
 				id: halfNoteCB
 				text: "half"
@@ -1037,6 +1068,17 @@ MuseScore {
 					resetTrainingLevel();
 				}
 			}
+			// CheckBox {
+				// id: dotNoteCB
+				// text: "'.'(dot) notes"
+				// checked: true
+				// onClicked: { 
+					// //console.log("onClicked: sixteenthRestCB"); 
+					// resetTrainingLevel();
+				// }
+			// }
+
+		
             Label {
                   text: qsTr("Rests:")
 				  Layout.columnSpan: 2
@@ -1105,6 +1147,15 @@ MuseScore {
 					resetTrainingLevel();
 				}
 			}
+			// CheckBox {
+				// id: dotRestCB
+				// text: "'.'(dot) rests"
+				// checked: true
+				// onClicked: { 
+					// //console.log("onClicked: sixteenthRestCB"); 
+					// resetTrainingLevel();
+				// }
+			// }
  
 			// CheckBox {
 				// id: augmentedDot
@@ -1224,15 +1275,15 @@ MuseScore {
 				}
 			}
 			
-            Button {
-                  id: resetButton
-                  Layout.columnSpan: 2
-                  text: qsTranslate("PrefsDialogBase", "Reset to Default")
-                  onClicked: {
-                        resetTrainingLevel();
-						resetToDefaultConfig();
-                  }
-            }
+            // Button {
+                  // id: resetButton
+                  // Layout.columnSpan: 2
+                  // text: qsTranslate("PrefsDialogBase", "Reset to Default")
+                  // onClicked: {
+                        // resetTrainingLevel();
+						// resetToDefaultConfig();
+                  // }
+            // }
             Button {
                   id: applyButton
                   //Layout.columnSpan: 2
@@ -1246,7 +1297,7 @@ MuseScore {
             Button {
                   id: cancelButton
                   //Layout.columnSpan: 2
-                  text: qsTranslate("PrefsDialogBase", "Cancel")
+                  text: qsTranslate("PrefsDialogBase", "Exit")
                   onClicked: {
                         pluginId.parent.Window.window.close();
 						Qt.quit();
@@ -1268,4 +1319,11 @@ MuseScore {
             pluginId.parent.Window.window.close();
 			Qt.quit();
       }
+	  // Keys.onPressed: {
+		// console.log("event.key: " + event.key);
+        // if (event.key == Qt.Key_Left) {
+            // console.log("move left");
+            // event.accepted = true;
+        // }
+	  // }
 }
