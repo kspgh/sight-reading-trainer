@@ -21,3 +21,6 @@ If you want to use it:
 ![medium](https://user-images.githubusercontent.com/4438915/151887609-a879c1ab-5688-49ab-9b51-fdb801ea1fb5.png)
 ![complex](https://user-images.githubusercontent.com/4438915/151887615-60b01d09-9a12-41cb-ac9b-e8bb9aeb7787.png)
 
+A small tutorial video is explains how to use the tool:
+https://youtu.be/zOg1HkE8YDU
+
