@@ -3,6 +3,7 @@
 This project appears in PlugIns of Musescore: https://musescore.org/en/project/sight-reading-trainer
 
 Musescore PlugIn that generates random notes to help improving sight reading skills.
+
 ![sight_reading_trainer_snapshot_v1_0_6](https://user-images.githubusercontent.com/4438915/152870849-3f8a3ff7-0c6e-432c-9988-87820505893c.png)
 
 Based on the settings, the plugin generates random notes that can be used to improve sight reading skills.
