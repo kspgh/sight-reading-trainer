@@ -6,8 +6,13 @@
 //  GitHub: https://github.com/kspgh/sight-reading-trainer
 //  
 //
+//  Version: 1.0.6
+//	- Corrected the title of the training score from "Site Reading Trainer" to "Sight Reading Trainer"
+//
 //  Version: 1.0.5
 //	- added Element.TIMESIG to indicate that measures are in 4/4
+//	- added support <.> notes
+//
 //
 //  Version: 1.0.4
 //  - configuration appears as composer. This helps to reproduce a radom score with the same configuration if one saves the score
@@ -691,16 +696,17 @@ MuseScore {
 			measures++;
 		}
 
-		//var score = newScore("Random.mscz", "x", measures);
+		//var score = newScore("Random.mscz", "piano", measures);
+		var score = newScore("Random.mscz", "x", measures); //creates a crash if eights rest are applied. don't know why
 		//var score = newScore("Random.mscz", "grand-piano", measures);
-		var score = newScore("Random.mscz", "violin", measures);
+		//var score = newScore("Random.mscz", "violin", measures);
 		
 		score.startCmd();
 		//trying to add a bass clef "F" but it does not work this way :-(
 		//score.appendPart("grand-piano");
 		//score.appendPartByMusicXmlId("grand-piano");
 
-		score.addText("title", "Site Reading Trainer");
+		score.addText("title", "Sight Reading Trainer");
 		var trainingMeasures = measures; 
 		if(countIn){
 			trainingMeasures--;
