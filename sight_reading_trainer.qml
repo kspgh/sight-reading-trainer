@@ -54,7 +54,7 @@ import MuseScore 3.0
 
 MuseScore {
 	menuPath: "Plugins.SightReadingTrainer"
-	version: "1.0.5"
+	version: "1.0.6"
 	description: qsTr("Creates random notes and rests to train sight reading")
 	pluginType: "dialog"
 	requiresScore: false
